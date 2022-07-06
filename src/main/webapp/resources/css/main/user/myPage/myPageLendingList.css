@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+
+a:link {
+	text-decoration:	none;
+	color:				black;
+}
+a:visited {
+	text-decoration:	none;
+	color:				black;
+}
+a:active {
+	text-decoration:	none;
+	color:				black;
+}
+a:hover {
+	text-decoration:	none;
+	color:				black;
+}
+
+
+.main-container{
+	
+	min-height:		520px;
+	max-width:		1080px;
+	margin:			0 auto;
+	padding: 		50px 25px 25px 25px;
+	overflow:		hidden;
+	
+}
+.lendingList{
+	height:			100%;
+}
+.list_tab{
+	width:			100%;
+	display:		table;
+	table-layout: 	fixed;
+	margin-top:		20px;
+	
+}
+.tab_source{
+	display: 		table-cell;
+	text-align: 	center;
+	border-bottom:	1px solid #d3d3d3;
+	padding-bottom:	8px;
+
+}
+.tab_link{
+	padding-top: 	10px;
+	height:			70px;
+}
+
+.lending_list_container{
+	height:			100%;
+	
+}
+.lending_list_wrap{
+	width:		1050px;
+	display:	flex;
+	flex-direction: column;
+	margin-bottom:	18px;
+	border:	1px solid #d3d3d3;
+	border-radius:	12px;
+}
+.lending-list{
+	display:		flex;
+	align-content: 	space-between;
+	border-bottom:	1px solid #d3d3d3;
+	height:			80x;
+	padding-top:	12px;
+	border-radius:	12px;
+	
+}
+.lending-list-thumnail{
+	height:			100%;
+	width:			120px;
+	border:			1px solid #000;
+	border-radius:	12px;
+}
+.lending-list-thumnail img {
+	border-radius:	12px;
+}
+.lending-list-inform{
+	display:		flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width:			502px;
+	padding:		0 8px 0 8px;
+	
+}
+.lending-title {
+	
+	font-size:	18px;
+	height:		50px;
+	
+}
+.lending-periodAndPrice{
+	display:		flex;
+	justify-content: space-between;
+}
+.lending-period{
+	font-weight:	700;
+	font-size:	14px;
+	height:		70px;
+}
+.lending-price{
+	padding-top:	30px;
+	font-size:		20px;
+	font-weight:	700;
+	
+}
+.lending-buttonList{
+	padding-left:	18px;
+	display:		flex;
+	
+}
+.buttonList{
+	width:	120px;
+	height:	50px;
+	margin: 10px 10px 10px 10px;
+	border-radius: 20px;
+}
+.btnTitle{
+	width: 27px;
+}
+
+.goods-title {
+	display: 			flex;
+	flex-direction:		row;
+	border-bottom:		1px solid #d3d3d3;
+}
+
+.btn-source{
+	display:			flex;
+	flex-direction:		row;
+	align-items: 		flex-end;
+}

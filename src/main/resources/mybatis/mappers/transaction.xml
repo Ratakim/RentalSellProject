@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="mapper.transaction">
+
+
+
+
+
+<!--*************** 상품 예약 등록하기 ***************-->
+ 
+ 	<!-- 상품 예약하기 -->
+	<insert id="insertReservation" parameterType="reserveVO">
+	<![CDATA[
+	INSERT INTO 
+	transaction	(reserve_NUM, user_ID, goods_code, 
+				total_price, borrow_period_start, borrow_period_end, create_date)
+	VAlUES 		(SEQ_RESERVE_NUM.nextval, #{user_ID}, #{goods_code}, 
+				#{total_price}, TO_DATE(#{borrow_period_start},'YYYY-MM-DD HH24:MI'), TO_DATE(#{borrow_period_end},'YYYY-MM-DD HH24:MI'), sysdate)
+	]]>
+	</insert>
+ 
+	 <!-- id에 따른 등록된 상품 리스트 가져오기 -->
+ 	<select id="selectSearchAllGoodsById" resultMap="goodsBoardThumb" parameterType="String">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check
+	FROM        goods_board gb
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	WHERE       gb.user_ID = #{user_ID}
+	ORDER BY    gb.create_date DESC
+	]]>
+	</select>
+	
+ 	<!-- id에 따른 예약 승인중인 상품 리스트 가져오기 -->
+	<resultMap 	id="transactionGoodsBoard" 	type="goodsByIdVO">
+		<id 	column="goods_code" 		property="goods_code"></id>
+		<result column="category_ID" 		property="category_ID"></result>
+		<result column="user_ID" 			property="user_ID"></result>
+		<result column="deal_region" 		property="deal_region"></result>
+		<result column="goods_title" 		property="goods_title"></result>
+		<result column="goods_desc" 		property="goods_desc"></result>
+		<result column="goods_price" 		property="goods_price"></result>
+		<result column="goods_price_comma" 	property="goods_price_comma"></result>
+		<result column="create_date" 		property="create_date"></result>
+		<result column="goods_hit" 			property="goods_hit"></result>
+		<collection property="reserveList"
+					resultMap="getTransaction"/>
+	</resultMap>
+	
+	<resultMap 	id="goodsBoardThumb" 	type="goodsByIdVO">
+		<id 	column="goods_code" 		property="goods_code"></id>
+		<result column="category_ID" 		property="category_ID"></result>
+		<result column="user_ID" 			property="user_ID"></result>
+		<result column="deal_region" 		property="deal_region"></result>
+		<result column="goods_title" 		property="goods_title"></result>
+		<result column="goods_desc" 		property="goods_desc"></result>
+		<result column="goods_price" 		property="goods_price"></result>
+		<result column="goods_price_comma" 	property="goods_price_comma"></result>
+		<result column="create_date" 		property="create_date"></result>
+		<result column="goods_hit" 			property="goods_hit"></result>
+		<collection property="goodsFileList"
+					resultMap="getThumbNail"/>
+	</resultMap>
+	
+	<resultMap 	id="transactionGoodsBoardAll" 	type="goodsByIdVO">
+		<id 	column="goods_code" 		property="goods_code"></id>
+		<result column="category_ID" 		property="category_ID"></result>
+		<result column="user_ID" 			property="user_ID"></result>
+		<result column="deal_region" 		property="deal_region"></result>
+		<result column="goods_title" 		property="goods_title"></result>
+		<result column="goods_desc" 		property="goods_desc"></result>
+		<result column="goods_price" 		property="goods_price"></result>
+		<result column="goods_price_comma" 	property="goods_price_comma"></result>
+		<result column="create_date" 		property="create_date"></result>
+		<result column="goods_hit" 			property="goods_hit"></result>
+		<collection property="reserveList"
+					resultMap="getTransaction"/>
+		<collection property="goodsFileList"
+					resultMap="getThumbNail"/>
+	</resultMap>
+	
+	<resultMap id="getTransaction" type="reserveVO">
+		<id 	column="reserve_NUM" 				property="reserve_NUM"></id>
+		<result column="transaction_user_ID" 		property="user_ID"></result>
+		<result column="goods_code" 				property="goods_code"></result>
+		<result column="total_price" 				property="total_price"></result>
+		<result column="borrow_period_start" 		property="borrow_period_start"></result>
+		<result column="borrow_period_end" 			property="borrow_period_end"></result>
+		<result column="transaction_create_date" 	property="create_date"></result>
+		<result column="transaction_status" 		property="transaction_status"></result>
+	</resultMap>
+	
+	<resultMap id="getThumbNail" type="goodsImgFileVO">
+		<id 	column="file_num" 					property="file_num"></id>
+		<result column="file_goods_code" 			property="goods_code"></result>
+		<result column="origin_file_name" 			property="origin_file_name"></result>
+		<result column="stored_file_name" 			property="stored_file_name"></result>
+		<result column="stored_thumbNail" 			property="stored_thumbNail"></result>
+		<result column="file_size" 					property="file_size"></result>
+		<result column="file_create_date" 			property="create_date"></result>
+		<result column="delete_check" 				property="delete_check"></result>
+	</resultMap>
+	
+<!-- 판매자 -->
+	<!-- 판매자 예약 승인중인 상품 리스트 버튼  -->
+	<select id="selectAlltransactionL" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       gb.user_ID = #{user_ID}
+	AND         tr.reserve_NUM is not null
+	AND 		tr.transaction_status IN ('예약승인중', '구매자입금중')
+	ORDER BY    gb.create_date DESC
+	
+	]]>
+	</select>
+	
+	<!-- 판매자 빌려주기 진행중인 상품 리스트 버튼  -->
+	<select id="lenderProceededTransactionList" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       gb.user_ID = #{user_ID}
+	AND         tr.reserve_NUM is not null 
+	AND 		tr.transaction_status IN ('결제완료', '제품인수완료')
+	ORDER BY    gb.create_date DESC
+   	]]>
+	</select>
+	
+	<!-- 판매자 빌려주기 종료된 상품 리스트 버튼  -->
+	<select id="lenderEndTransactionList" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       gb.user_ID = #{user_ID}
+	AND         tr.reserve_NUM is not null 
+	AND 		tr.transaction_status IN ('반납완료')
+	ORDER BY    gb.create_date DESC 
+   	]]>
+	</select>
+	
+<!-- 판매자 END -->
+	
+<!-- 구매자 -->
+	<!-- 구매자 예약 요청중인 상품 리스트 버튼  -->
+	<select id="borrowerTransactionList" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       tr.user_ID = #{user_ID}
+	AND 		tr.transaction_status IN ('예약승인중', '구매자입금중')
+	ORDER BY    gb.create_date DESC
+	]]>
+	</select>
+	
+	<!-- 구매자 빌리기 진행중인 리스트 버튼  -->
+	<select id="borrowerProceededTransactionList" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       tr.user_ID = #{user_ID}
+	AND 		tr.transaction_status IN ('결제완료', '제품인수완료')
+	ORDER BY    gb.create_date DESC 
+	]]>
+	</select>
+	
+	<!-- 구매자 빌리기 종료된 리스트 버튼  -->
+	<select id="borrowerEndTransactionList" resultMap="transactionGoodsBoardAll">
+	<![CDATA[
+	SELECT   
+        gb.goods_code           goods_code,
+        gb.category_ID          category_ID,
+        gb.user_ID              user_ID,
+        gb.goods_title          goods_title,
+        gb.deal_region          deal_region,
+        gb.goods_desc           goods_desc,
+        gb.goods_price          goods_price,
+        to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+        gb.create_date          create_date,
+        gb.goods_hit            goods_hit,
+        gf.file_num             file_num,
+        gf.goods_code           file_goods_code,
+        gf.origin_file_name 	origin_file_name,
+        gf.stored_file_name		stored_file_name,
+        gf.stored_thumbNail		stored_thumbNail,
+        gf.file_size		    file_size,
+        gf.create_date		    file_create_date,
+     	gf.delete_check	        delete_check,
+        tr.reserve_NUM          reserve_NUM,
+        tr.user_ID              transaction_user_ID,
+        tr.goods_code           transaction_goods_code,
+        tr.total_price          total_price,
+        tr.borrow_period_start     borrow_period_start,
+        tr.borrow_period_end       borrow_period_end,
+        tr.create_date            transaction_create_date,
+        tr.transaction_status      transaction_status
+	FROM        goods_board gb
+	
+	LEFT JOIN   (   
+	                SELECT  * 
+	                FROM    goods_imagefile 
+	                WHERE   stored_thumbnail = 1
+	            ) gf
+	ON          gb.goods_code = gf.goods_code
+	
+	LEFT JOIN   transaction tr
+	ON          gb.goods_code = tr.goods_code
+	
+	WHERE       tr.user_ID = #{user_ID}
+	AND 		tr.transaction_status IN ('반납완료')
+	ORDER BY    gb.create_date DESC 
+	]]>
+	</select>
+<!-- 구매자 END -->
+
+<!-- 판매자 -->
+	 <!-- (빌려주기)등록된상품 개수 가져오기 -->
+ 	<select id="getRegistCount" resultType="int" parameterType="goodsByIdVO">
+	<![CDATA[
+	SELECT 	count(*)
+	FROM 	goods_board
+	WHERE  	user_ID = #{user_ID}
+	]]> 
+	</select>
+	
+	<!-- (빌려주기)예약 요청중인 상품 개수 가져오기 -->
+ 	<select id="getRequestCount" resultType="int" parameterType="goodsByIdVO">
+	<![CDATA[
+   	SELECT 	count(*)
+	FROM 	transaction tr, goods_board gb
+	WHERE	tr.goods_code = gb.goods_code
+	AND		gb.user_ID = #{user_ID}
+	AND transaction_status IN ('예약승인중', '구매자입금중')
+	]]> 
+	</select>
+	
+	 <!-- (빌려주기)거래 진행중인 상품 개수 가져오기 -->
+ 	<select id="getProceedCount" resultType="int" parameterType="goodsByIdVO">
+	<![CDATA[
+   	SELECT 	count(*)
+	FROM 	transaction tr, goods_board gb
+	WHERE	tr.goods_code = gb.goods_code
+	AND		gb.user_ID = #{user_ID}
+	AND transaction_status IN ('결제완료', '제품인수완료')
+	]]> 
+	</select>
+	
+	 <!-- 판매자(빌려주기)거래 종료된 상품 개수 가져오기 -->
+ 	<select id="getEndedCount" resultType="int" parameterType="goodsByIdVO">
+	<![CDATA[
+   	SELECT 	count(*)
+	FROM 	transaction tr, goods_board gb
+	WHERE	tr.goods_code = gb.goods_code
+	AND		gb.user_ID = #{user_ID}
+	AND 	tr.transaction_status IN ('반납완료')
+	]]> 
+	</select>
+<!-- 판매자 END -->
+
+<!-- 구매자 -->
+
+	<!-- (빌리기현황) 예약요청중인 상품 개수 가져오기  -->
+	<select id="getRequestCountB"  resultType="int" parameterType="goodsByIdVO">
+	<![CDATA[
+	SELECT	COUNT(*)
+	FROM	transaction
+	WHERE	user_ID = #{user_ID}
+	AND 	transaction_status IN ('예약승인중', '구매자입금중')
+	]]>
+	</select>
+	
+		<!-- (빌리기현황) 빌리기 진행중인 상품 개수 가져오기  -->
+	<select id="getProceedCountB"  resultType="int" parameterType="String">
+	<![CDATA[
+	SELECT	COUNT(*)
+	FROM	transaction
+	WHERE	user_ID = #{user_ID}
+	AND 	transaction_status IN ('결제완료', '제품인수완료')
+	]]>
+	</select>
+	
+	<!-- 구매자(빌리기현황) 거래종료된 상품 개수 가져오기  -->
+	<select id="getEndedCountB"  resultType="int" parameterType="String">
+	<![CDATA[
+	SELECT 	COUNT(*)
+	FROM 	transaction
+	WHERE	user_ID = #{user_ID}
+	AND 	transaction_status IN ('반납완료')
+	]]>
+	</select>
+	
+<!-- 구매자 -->
+	
+	<!--(구매자) 입금하기버튼  -->
+	<update id="deposit" parameterType="int">
+	<![CDATA[
+	UPDATE 	transaction
+	SET 	transaction_status = '결제완료'
+	WHERE 	reserve_NUM = #{reserve_NUM}
+	]]>
+	</update>
+	
+	<!--(구매자) 물품 인수확인 버튼  -->
+	<update id="takeOver" parameterType="int">
+	<![CDATA[
+	UPDATE 	transaction
+	SET 	transaction_status = '제품인수완료'
+	WHERE 	reserve_NUM = #{reserve_NUM}
+	]]>
+	</update>
+	
+	<!--(판매자) 예약승인버튼  -->
+	<update id="approveReserve" parameterType="int">
+	<![CDATA[
+	UPDATE 	transaction
+	SET 	transaction_status = '구매자입금중'
+	WHERE 	reserve_NUM = #{reserve_NUM}
+	]]>
+	</update>
+	<!-- (판매자)물품 반납받기 확인 버튼  -->
+	<update id="returned" parameterType="int">
+	<![CDATA[
+	UPDATE 	transaction
+	SET 	transaction_status = '반납완료'
+	WHERE 	reserve_NUM = #{reserve_NUM}
+	]]>
+	</update>
+	
+	<!-- 예약 취소(delete) -->
+	<delete id="cancelReserve" parameterType="int">
+	<![CDATA[
+	DELETE 	
+	FROM 	transaction
+	WHERE	reserve_NUM = #{reserve_NUM}
+	]]>
+	</delete>
+	
+ </mapper>

@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, main, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 		0px;
+    padding: 		0px;
+    border: 		0px;
+    font: 			inherit;
+    vertical-align: baseline;
+}
+html, body { font-family: 	sans-serif; }
+
+
+
+
+body {
+	/*  min-height: 		700px;  */
+}
+
+hr { width:	100%; }
+
+/* 컨테이너를 flex를 사용해 column형태로 가운데 정렬한다. */ 
+.container {
+	margin:			0;	
+	min-width:		1200px;	
+	display: 		flex;
+	flex-direction: column;
+	min-height: 	1200px;
+			
+	/* height: 		auto;
+	overflow: 		hidden; */
+}
+.container-fluid {
+	padding:	0px;
+}
+
+
+header a, header button {
+	color:				#555;
+	padding:			0 10px;	
+	display: 			flex;
+	flex-direction: 	row;
+	align-items: 		center;
+	
+}
+
+header div 		{	background-color:	#efefef; }
+
+/* a태그 링크 마우스 오버시 색과 밑줄 제거 */
+header a:link	{	text-decoration: 	none; color:	#555; }
+
+/*
+sticky요소의 전체 부모요소 중에 
+overflow: auto、overflow: hidden、overflow: scroll 가 
+적용된 부모가 있으면 sticky가 안 먹는다. 
+부모의 height가 무조건 있어야 한다.
+*/
+/* .side-left {
+position: 			sticky;
+top:				400px;
+left:				0px;
+background-color: 	powderblue;
+width:				150px;
+height: 			700px;
+} */
+
+header {
+position: 			sticky;
+top: 				0;
+border-bottom: 		1px solid #000;
+}
+
+footer {
+/* position: 			sticky;  */
+bottom: 			0;
+border-top: 		1px solid #000;
+}
+
+.rentalTalk {
+	position: 			fixed;
+	top:				200px;
+	right:				0;
+	z-index: 			1;
+}
+.rentalTalk div {
+	display: 			flex;
+	border:				1px solid #000;
+	border-radius:  	5px;
+	width: 				100px;
+	height:				60px;
+	padding:			3px;
+	justify-content:	center;
+	align-items: 		center;
+	font-size: 			12px;
+}

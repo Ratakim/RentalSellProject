@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+.userInfo-container {
+	width:				60%;
+	
+}
+
+.info-main {
+	display: 			flex;
+	flex-direction: 	row;
+	justify-content: 	center;
+	align-items:		center;
+	min-height:			700px;
+}
+
+.info-main form {
+	min-height: 		500px;
+}
+
+
+.form-main {
+	position:			relative;
+	display: 			flex;
+	flex-direction:		column;
+	justify-content:	center;
+	width:				500px;
+	top:				70px;
+}
+
+.form-main > div {
+	margin:				10px 0;
+}
+
+.form-main > div * {
+	height: 			30px;
+}
+
+.bi-eye-slash::before {
+	font-size: 			15px;
+}
+
+.bi-eye::before {
+	font-size: 			15px;
+}
+
+.form-main div {
+	display:			flex;
+	flex-direction:		column;
+	flex-wrap: 			nowrap;
+	align-content: 		center;
+	justify-content: 	space-between;
+		
+}
+
+.form-main div.info-change-btn {
+	display:			flex;
+	flex-direction:		column;
+	flex-wrap: 			nowrap;
+	align-content: 		center;
+	justify-content: 	space-around;
+	margin:				10px 0;
+}
+
+.form-main > div input {
+	padding:			0 0 0 10px;
+}
+
+.pwd-div {
+	position: 			relative;
+	z-index: 			inherit;
+}
+
+.bi-eye {
+	display: none;	
+}
+
+#pwdBtn {
+	position: 			absolute;
+	left: 				500px;
+	width:				50px	
+}
+
+/********** modal *********/
+.modal {
+	position:			fixed;
+	top:				0;
+	left:				0;
+	width:				100%;
+	height: 			100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: 			none;
+}
+
+.modal.show {
+	display: block;
+}
+
+.modal-body {
+	position: 			absolute;
+	
+	width:				400px;
+	height: 			400px;
+	
+	background:			white;
+	border-radius: 		16px;
+	box-shadow: 		0 2px 3px 0 rgba(34, 36, 38, 0.15);;
+	
+	/* 모달 바디를 가운데로 정렬하기 */
+	/* 
+	모달 의 왼쪽 끝 모서리가 기준이므로 그것을 기준으로 화면의 50, 50 지점으로 이동하고 
+	transform: 을 이용해 자신의 크기를 기준으로 -50% 씩 이동하여 가운데로 간다.
+	*/	
+	top:				50%;
+	left:				50%;
+	/* translate(X, Y) 형태도 가능*/
+	transform: translateX(-50%) translateY(-50%); 
+}
+
+
+/********** modal *********/

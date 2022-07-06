@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="mapper.manager">
+
+	
+	<!-- 매니저 회원가입 -->
+ 	<select id="insertManager" parameterType="managerVO">
+ 	<![CDATA[
+ 	insert into manager_info(empnum, id, pwd, name, email, gender, join_date, last_join,  emailaccess,  sample4_postcode, sample4_roadAddress, sample4_jibunAddress, sample4_detailAddress)
+                  values(#{empnum}, #{id},#{pwd},#{name},#{email},#{gender},
+                  		  sysdate,sysdate,#{emailaccess},#{sample4_postcode},#{sample4_roadAddress},
+                  		  #{sample4_jibunAddress},#{sample4_detailAddress})
+ 	]]>
+	</select>
+	
+	
+	<!-- 매니저 목록 -->
+	<select id="selectMember" resultType="managerVO">
+	<![CDATA[
+		select empnum, name, id, email, join_date from manager_info ORDER BY  join_date DESC
+	]]>
+	</select>
+	
+	<!-- 매니저 정보수정 -->
+	<!-- <update id="updateMember" parameterType="managerVO">
+	<![CDATA[
+	   update manager_info
+  	 set empnum='인사',
+      	 pwd = '!q123t123' ,
+       	 email='update@com'
+    where id='';
+	]]>
+	</update> -->
+	
+	
+	
+	
+ </mapper>

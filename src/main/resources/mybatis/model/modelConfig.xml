@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration    
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- root-context.xml(action-mybatis.xml)에서 modelConfig.xml을 설정해주어야한다. -->
+
+<configuration>
+	<settings> 
+		<setting name="cacheEnabled" value="false" /> 
+		<!-- DB에서 컬럼에 NULL이 떴을 때 value를 null로 return하여 만들어 오류를 없애준다 -->
+		<setting name="jdbcTypeForNull" value="NULL" /> 
+		<setting name="callSettersOnNulls" value="true"/>
+		<!-- DB에서 컬럼이 empty상태이면 value를 true로 return하여 만들어 오류를 없애준다 -->
+		<setting name="returnInstanceForEmptyRow" value="true"/>
+	</settings>
+
+
+	<typeAliases>
+	
+		<!-- BillyUsVOs -->
+		
+		<!-- 유저 -->
+		<typeAlias type="com.project.billyus.vo.UserInfoVO" alias="userInfoVO"/>
+		<!-- 게시판 -->
+		<typeAlias type="com.project.billyus.vo.BoardVO" alias="boardVO"/>
+		<!-- 카테고리 -->
+		<typeAlias type="com.project.billyus.vo.RegistCtgVO" alias="registCtgVO"/>
+		<!-- 상품 게시판-->
+		<typeAlias type="com.project.billyus.vo.GoodsByIdVO" alias="goodsByIdVO"/>
+		<!-- 상품 게시판 이미지 파일 -->
+		<typeAlias type="com.project.billyus.vo.GoodsImgFileVO" alias="goodsImgFileVO"/>
+		<!-- 상품 게시판 페이징 -->
+		<typeAlias type="com.project.billyus.vo.PagingVO" alias="pagingVO"/>
+		<!-- 상품 예약 -->
+		<typeAlias type="com.project.billyus.vo.ReserveVO" alias="reserveVO"/>
+		<!-- 댓글 관련 -->
+		<typeAlias type="com.project.billyus.vo.ReplyVO" alias="ReplyVO"/>
+		<!-- 카드 계좌 등록 관련 -->
+		<typeAlias type="com.project.billyus.vo.UserCertifyVO" alias="UserCertifyVO"/>
+		<!-- 매니저VO -->
+		<typeAlias type="com.project.billyus.vo.ManagerVO" alias="managerVO"/>
+		
+
+		<!-- BillyUsVOs END -->
+		
+	</typeAliases>
+	
+</configuration>
+

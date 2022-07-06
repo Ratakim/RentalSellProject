@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+
+#find-userinfo-container {
+	display:			flex;
+	flex-direction:		column;
+	justify-content: 	space-evenly;
+	align-items:		center;
+	width:				100%;
+	min-height: 		800px;
+}
+
+.warning-msg {
+	width:				400px;
+	min-height: 		100px;
+}
+
+div.warning-msg span.warning {
+	color:				red;
+}
+
+div.warning-msg span.success {
+	color:				green;
+}
+
+div.warning-msg span.normal {
+	color:				black;
+}
+
+#find-userinfo-container form > div {
+	margin:				10px 0;
+}
+
+#find-userinfo-container form > div > label {
+	width:				100px;
+}
+
+#find-userinfo-container form > div > input {
+	width:				400px;
+}
+
+#find-userinfo-container form > div > button {
+	width:				50%;
+}
+

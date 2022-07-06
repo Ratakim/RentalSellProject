@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+
+	<!-- 게시판 다 불러오기 -->
+	<select id="BoardByName" parameterType="String"
+		resultType="boardVO">
+		<![CDATA[
+		SELECT 	*
+		FROM 	common_board
+		WHERE 	board_Type = #{board_Type}
+		]]>
+	</select>
+
+	<!-- 게시물 조희 -->
+	<select id="BoardDetail" parameterType="int" resultType="boardVO">
+		<![CDATA[
+		SELECT 	*
+	    FROM 	common_board
+		WHERE 	article_NO = #{article_NO}
+		]]>
+	</select>
+
+	<!-- myPage 게시판 작성 -->
+	<insert id="BoardWriting" parameterType="boardVO">
+		<![CDATA[
+		INSERT 
+		INTO 	common_board (article_NO, 			board_Type,    title, 	  content, 	  id,  write_Date)
+	    VALUES				 (NOTICE_SEQ.NEXTVAL, #{board_Type}, #{title},	#{content},	#{id}, sysdate)
+		]]>
+	</insert>
+
+	<!-- 게시물 삭제 -->
+	<delete id="boardDelete" parameterType="int">
+		<![CDATA[
+		DELETE
+		FROM 	common_board
+		WHERE 	article_NO = #{article_NO}
+		]]>
+	</delete>
+	<!-- 게시물 수정 -->
+	<update id="boardModify" parameterType="boardVO">
+		<![CDATA[
+		UPDATE 	common_board
+		SET		title =	#{title}, content = #{content}
+		WHERE 	article_NO = #{article_NO}
+		]]>
+	</update>
+	
+	<!-- 게시물 목록 + 페이징 + 검색 -->
+	<select id="boardPaging" parameterType="hashMap" resultType="boardVO">
+		<![CDATA[
+		SELECT 	article_NO, title, content, id, write_Date
+      	FROM 
+      	(
+           			select 	article_NO, title, content, id, write_Date, row_number() over(order by article_NO desc) as rNum
+           			from common_board
+           			where 	board_Type = #{board_Type}
+            		<include refid="search"></include>
+     	) mb
+    	WHERE 	rNum between #{displayPost} and #{postNum}
+        ORDER BY article_NO desc
+		]]>
+	</select>
+	
+	<sql id="search">
+		 <if test="searchType != null">
+			  <if test="searchType == 't'.toString()">and title like '%' || #{keyword} || '%'</if>
+			  <if test="searchType == 'c'.toString()">and content like '%' || #{keyword} || '%'</if>
+			  <if test="searchType == 'i'.toString()">and id like '%' || #{keyword} || '%'</if>
+		 </if>
+	</sql>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="count" parameterType="hashMap" resultType="int">
+		 SELECT count(article_NO)
+		 FROM 	common_board
+		 WHERE 	board_Type = #{board_Type}
+		 <include refid="search2"></include>
+	</select>
+	
+		<sql id="search2">
+ <if test="searchType != null">
+  <if test="searchType == 't'.toString()">and title like '%' || #{keyword} || '%'</if>
+  <if test="searchType == 'c'.toString()">and content like '%' || #{keyword} || '%'</if>
+  <if test="searchType == 'i'.toString()">and id like '%' || #{keyword} || '%'</if>
+ </if>
+</sql>
+
+                                     
+                                     <!-- 댓글 관련 mapper -->
+  <!-- 댓글 조회 -->
+<select id="replyList" parameterType="int" resultType="ReplyVO">
+	SELECT 	rno, bno, id, content, write_Date
+	FROM 	boardReply
+	WHERE 	bno = #{bno}		
+</select>
+
+<!-- 댓글 작성 -->
+<insert id="replyWrite" parameterType="ReplyVO">
+	INSERT
+	INTO 	boardReply(rno, bno, id, content, write_Date)
+	VALUES 	(Rep_SEQ.NEXTVAL, #{bno}, #{id}, #{content}, sysdate)
+</insert>
+	
+<!-- 댓글 수정 -->
+<update id="replyModify" parameterType="ReplyVO">
+	UPDATE 	boardReply 
+	SET		id = #{id}, content = #{content}
+	WHERE 	rno = #{rno} AND bno = #{bno}	
+</update>
+
+<!-- 댓글 삭제 -->
+<delete id="replyDelete" parameterType="ReplyVO">
+	DELETE 
+	FROM 	boardReply
+	WHERE 	rno = #{rno}
+</delete>
+	
+
+	
+
+
+</mapper>

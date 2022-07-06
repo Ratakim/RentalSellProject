@@ -1,0 +1,468 @@
+@charset "UTF-8";
+
+
+li {
+	list-style:	none;
+}
+
+.registerMain {
+	background:			rgb(255,255,255);
+	font-size:			16px;
+	position:			relative;
+	
+	
+}
+
+.rm-main {
+    display: block;
+    width: 1024px;
+    margin: auto;
+}
+
+.rm-section {
+    margin-bottom: 3rem;
+}
+
+.rm-ul {
+    padding-top: 0.5rem;
+}
+
+.rm-listname {
+    width: 100%;
+    display: flex;
+    padding: 2rem 0px;
+    border-bottom: 1px solid rgb(220, 219, 228);
+}
+
+
+.rm-ln {
+    width: 10.5rem;
+    font-size: 18px;
+    padding-top: 14px;
+}
+
+.rm-ln-it {
+    flex: 1 1 0%;
+}
+
+.rm-ln-itt {
+	width:	800px;
+	height:	48px;
+}
+
+
+.rm-cn {
+    width: 170px;
+    height: 336px;
+    font-size: 18px;
+    padding-top: 8px;
+   
+}
+
+.rm-cn-it {
+    flex: 1 1 0%;
+}
+
+.rm-cn-itt {
+    display: flex;
+    width: 100%;
+    height: 19rem;
+    overflow: hidden;
+    border: 1px solid rgb(220, 219, 228);
+    border-radius: 12px;
+}
+
+.rm-cn-itt-large {
+    width: 284px;
+    height: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    overflow-y: auto;
+    color: rgb(195, 194, 204);
+}
+
+.rm-cn-itt-large li.selected{
+	color: 	rgb(255, 80, 88);
+	background-color:	rgba(30, 29, 41, 0.32);
+}
+
+.rm-cn-itt-middle {
+    width: 284px;
+    height: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    overflow-y: auto;
+    color: rgb(195, 194, 204);
+}
+
+.rm-cn-itt-large-a {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0px;
+}
+
+.rm-cn-itt-middle-a {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0px;
+}
+
+.large-a {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    -webkit-box-align: center;
+    align-items: center;
+   
+}
+
+.large-a-s {
+	
+    width: 100%;
+    height: 100%;
+    padding: 0px 1.5rem;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+    appearance: button;
+}
+
+button {
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: 0px;
+}
+
+.rm-cn-if {
+    margin-top: 1.5rem;
+    font-size: 16px;
+    color: rgb(255, 80, 88);
+}
+
+
+.rm-in {
+    width: 10.5rem;
+    font-size: 18px;
+}
+
+.rm-ir {
+    flex: 1 1 0%;
+}
+
+.rm-ir-m {
+    display: flex;
+    width: 856px;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+}
+
+.img_rr {
+	width: 202px;
+	height: 202px;
+}
+
+.imageRegist {
+    width: 202px;
+    height: 202px;
+    position: relative;
+    border: 1px solid rgb(230, 229, 239);
+    background: rgb(250, 250, 253);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(155, 153, 169);
+    font-size: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+
+.rm-ir-caution {
+    margin-top: 1.5rem;
+    color: rgb(255, 80, 88	);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+
+
+.rm-region-n {
+    width: 10.5rem;
+    font-size: 18px;
+    padding-top: 14px;
+}
+
+.rm-region-r {
+    flex: 1 1 0%;
+}
+
+.rm-main input:not([type="file"]):not([type="radio"]):read-only {
+    background: rgb(244, 244, 250);
+}
+
+.rm-main input:not([type="file"]):not([type="radio"]) {
+    height: 3rem;
+    padding: 0px 1rem;
+}
+
+.region-input {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.region-mb {
+    height: 3rem;
+    width: 6.5rem;
+    text-align: center;
+    border: 1px solid rgb(195, 194, 204);
+    margin-right: 1rem;
+    border-radius: 2px;
+}
+
+.rm-gi-n {
+    width: 10.5rem;
+    font-size: 18px;
+    padding-top: 18px;
+}
+
+.rm-gi-it {
+    width: 100%;
+}
+
+.rm-gi-ita {
+    width: 100%;
+    border-color: rgb(245, 126, 0) !important;
+}
+
+.rm-price-n {
+    width: 10.5rem;
+    font-size: 18px;
+    padding-top: 14px;
+}
+
+.rm-price-hour {
+	margin:		10px  0px;
+}
+
+.rm-price-day {
+	margin: 	10px   0px;
+}
+
+.rm-registButton {
+    width: 100%;
+    height: 5.5rem;
+    background: rgb(250, 250, 253);
+    box-shadow: rgb(234 233 241) 0px -1px 0px 0px;
+    position: sticky;
+    left: 0px;
+    bottom: 0px;
+}
+
+.rb-panel {
+    display: flex;
+    height: 100%;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 1024px;
+    margin: auto;
+}
+
+.rb-main {
+    height: 3.5rem;
+    width: 10rem;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 12px;
+    background: rgb(255, 80, 88);
+    position: relative;
+}
+
+
+.rb-main::before {
+    content: "등록하기";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 12px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+
+.error-ctg {
+    color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.error-region {
+	color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.eeeee-e {
+    color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.error-name {
+    color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+   
+}
+.error-explain {
+    color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+   
+}
+.error-price {
+	color: rgb(245, 126, 0);
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.imgClass {
+	width: 202px;
+	height: 202px;
+	border: 1px solid rgb(230, 229, 239);
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    list-style-type: none;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+}
+
+.imgButton {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    background-image: url(../../../images/xbutton.png);
+    background-color: rgba(30, 29, 41, 0.32);
+    border-radius: 50%;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+}
+
+button.imgButton {
+   
+position: 	absolute;
+top:		0.5rem;
+right:		0.5rem;
+    
+    
+}
+
+
+
+
+
+
+li img {
+      width: 200px;
+      height: 200px;
+    }
+
+
+
+
+.imageRegist::before {
+    content: "";
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 2rem;
+    height: 2rem;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4KICAgIDxwYXRoIGZpbGw9IiNEQ0RCRTQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI4LjQ3MSAzMkgzLjUzYy0uOTcxIDAtMS44OTQtLjQyMi0yLjUyOS0xLjE1N2wtLjAyNi0uMDNBNCA0IDAgMCAxIDAgMjguMTk4VjguNjA3QTQgNCAwIDAgMSAuOTc0IDUuOTlMMSA1Ljk2YTMuMzQzIDMuMzQzIDAgMCAxIDIuNTI5LTEuMTU2aDIuNTM0YTIgMiAwIDAgMCAxLjUzNy0uNzJMMTAuNC43MkEyIDIgMCAwIDEgMTEuOTM3IDBoOC4xMjZBMiAyIDAgMCAxIDIxLjYuNzJsMi44IDMuMzYzYTIgMiAwIDAgMCAxLjUzNy43MmgyLjUzNGMuOTcxIDAgMS44OTQuNDIzIDIuNTI5IDEuMTU3bC4wMjYuMDNBNCA0IDAgMCAxIDMyIDguNjA2djE5LjU5MWE0IDQgMCAwIDEtLjk3NCAyLjYxN2wtLjAyNi4wM0EzLjM0MyAzLjM0MyAwIDAgMSAyOC40NzEgMzJ6TTE2IDkuNmE4IDggMCAxIDEgMCAxNiA4IDggMCAwIDEgMC0xNnptMCAxMi44YzIuNjQ3IDAgNC44LTIuMTUzIDQuOC00LjhzLTIuMTUzLTQuOC00LjgtNC44YTQuODA1IDQuODA1IDAgMCAwLTQuOCA0LjhjMCAyLjY0NyAyLjE1MyA0LjggNC44IDQuOHoiLz4KPC9zdmc+Cg==);
+    margin-bottom: 1rem;
+}
+
+.rm-main input, .rm-main textarea {
+    border: 1px solid rgb(195, 194, 204);
+}
+
+.imageRegist input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0px;
+}
+
+
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+body, input, textarea, select, button {
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    direction: ltr;
+    text-align: left;
+    color: rgb(33, 33, 33);
+    letter-spacing: -0.5px;
+    outline: 0px;
+    border: 0px;
+    border-radius: 12px;
+}
+
+
+button, input {
+    overflow: visible;
+}
+
+textarea {
+    overflow: auto;
+}
+
+.show {
+	display: block;
+}
+

@@ -1,0 +1,346 @@
+@charset "UTF-8";
+
+/****** header common ******/
+
+header {
+	height:				80px;
+	display: 			flex;
+	flex-direction: 	column;
+	z-index: 			99;
+	width:				100%;
+	border-bottom:		1px solid #000;
+}
+
+/* 헤더의 a, button 와 옆에 있는 이미지를 위치를 구성하는 기본 CSS */
+header a, header button {
+	color:				#555;
+	padding:			0 10px;	
+	display: 			flex;
+	flex-direction: 	row;
+	align-items: 		center;
+}
+
+header div 		{	background-color:	white; }
+
+/* a태그 링크 마우스 오버시 색과 밑줄 제거 */
+header a:link	{	text-decoration: 	none; color:	#555; }
+
+/****** header common ******/
+
+/****** header-login ******/
+.header-login {
+	height:				30px;
+	display:			flex;
+	flex-direction: 	row;
+	justify-content: 	space-between;
+}
+
+.header-login img 		{ width:		15px;  	height:		15px; }
+
+.header-login button 	{ border:		0; 		background: none; }
+
+.header-font-size 		{ font-size:	14px; 	}
+
+
+#member-form-link	{
+	display	: flex;
+	flex-flow: row;
+}
+#member-form-link-logon	{
+	display	: flex;
+	flex-flow: row;
+}
+
+#member-form-link	a:nth-child(1)	{	padding-right: 	0px; }
+#member-form-link	a:nth-child(2)	{	padding-left: 	0px; }
+/****** header-login END ******/
+
+/****** search ******/
+.header-search {
+	display:			flex;
+	flex-flow: 			row nowrap;
+	justify-content: 	space-between;
+	height:				49px;
+}
+
+#mainLogo {	width:	136px;	height:	40px; }
+
+.header-sell {
+	display:		flex;
+	flex-flow:		row nowrap;
+	align-items: 	center;
+	width: 250px;
+}
+.header-sell .regist-btn {
+	right:100px;
+	
+	
+}
+.header-sell img { width:	15px; height:	15px; }
+/* .header-sell a:nth-child(2), .header-sell a:nth-child(3) {
+	border-left: 	1px dashed #555;
+} */
+
+.seach-div {
+	position: 			relative;
+}
+
+.search-bar {
+	padding:			0 0 0 20px;
+	border-radius: 		16px 0 0 16px;
+	border-color:		black;
+	width:				550px;
+	height:				44px important!;
+	outline: 			none;
+}
+
+#searchBar:focus, #searchBar:focus .search-btn {
+	border-radius: 		16px 0 0 0;	
+}
+
+#barOutline {
+	position:		relative;
+	border-radius:	16px;
+	
+}
+
+
+
+.search-bar-form button {
+	top:				0;
+	padding:			9px 10px 10px 9px;
+	height:				40px;
+	width:				46px;
+	background: 		black;
+	border:				2px solid black;
+	border-radius: 		0 16px 16px 0;
+	display: 			flex;
+	flex-direction: 	row;
+	justify-content: 	space-evenly;		
+}
+
+  .search-bar-form button:hover, .search-bar:hover {
+	/* outline은 radius를 만들 수 없으므로 
+	box-shadow를 outline처럼 만들어 사용할 수 있다. */
+	box-shadow: 		0 0 0 3px gray;
+}  
+
+
+.search-bar-form button div { padding:	0 0 5px 0; }
+
+/* CSS로 검색창 드롭다운 효과 생성 */
+.dropdownBar {
+	position: 	relative;
+	display: 	inline-block;
+	font-size:	16px;		
+	height:		40px;
+}
+
+.dropdownBar-search {
+	display: flex;
+	flex-direction: row;
+	height:		40px;
+}
+
+
+.dropdownBar-content {
+	border:			1px solid #000;
+	display: 		none;
+	position: 		absolute;
+	/*다른 요소들보다 앞에 배치*/
+	z-index: 		1;
+	min-height: 	400px;
+}
+
+.dropdown-content a {
+	display: 			block;
+	text-decoration : 	none;
+	color : 			rgb(37, 37, 37);
+	font-size: 			12px;
+	padding : 			12px 20px;
+}
+
+.dropdownBar-content, .dropdownBar-content li {
+	width:		446px;
+	height:		40px;
+}
+
+.dropdownBar-content li {
+	position:		relative;
+	width:			446px;
+	height:			30px;
+	padding:		0 0 0 20px;
+	background:	lightgray;
+	border:			1px solid #000;
+}
+
+
+/* CSS로 검색창 드롭다운 효과 생성 */
+
+.updown {
+	/* div박스를 아주 작게만들고 원하는 방향의 
+	border를 조절하여 세로 선을 만들 수 있다. */
+	border-left: 	0.2px solid #555; 
+	width: 			0.1px; 
+	height: 		9px; 
+}
+
+/****** search END ******/
+
+/****** div : dropdown ******/
+.div-flex-column {	display: flex; 	flex-direction: column; }
+
+/* 나레이션 바를 만든다 */
+.header-nav div, .header-nav a {
+	border:		1px solid #000;
+}
+
+/* CSS로 드롭다운 효과 생성 */
+.dropdown {
+	position: 	relative;
+	display: 	inline-block;
+}
+
+.dropdown div {
+	font-size:	12px;
+}
+
+.dropdown-content {
+	display:	none;
+	position: 	absolute;
+	/*다른 요소들보다 앞에 배치*/
+	z-index: 	1; 
+}
+
+.dropdown-content a {
+	width:		100px;
+	height:		30px;
+}
+
+/* 마우스 오버시 창이 뜨게 한다. */
+.dropdown:hover .dropdown-content, .dropdown:hover .dropdown-content a {
+	display: 	block; 
+}
+
+/* 드롭다운 아이콘 */
+.bi-menu-up {
+	font-size: 		30px;
+    line-height: 	22px;
+    color:			black;;
+}
+
+
+/* -----------------myPageSidebar -----------------*/
+.myPageSidebar{
+    position: fixed;
+    top: 30px;
+    right: 0;
+    width: var(--nav--width);
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--white-color);
+    padding: 1.5rem 1.5rem 2rem;
+    transition: .5s;
+    z-index: 1;
+    padding: 0 0 0 15px;
+    
+}
+.nav__brand {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #000000;
+    height: 50px;
+}
+
+.nav__toggle {
+    font-size: 1.25rem;
+    padding: .75rem;
+    cursor: pointer;
+}
+
+.nav__logo {
+    color: var(--white-color);
+    font-weight: 600;
+}
+
+.nav__link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: .75rem;
+    padding: .75rem;
+    color: var(--white-color);
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.nav__link:hover {
+    background-color: var(--first-color);
+}
+
+.nav__icon {
+    font-size: 1.25rem;
+}
+
+.nav_name {
+    font-size: var(--small-font-size);
+}
+
+/* Expander menu */
+.expander {
+    width: calc(var(--nav--width) + 9.25rem);
+}
+
+/* Add padding body*/
+.body-pd {
+    padding: 2rem 0 0 16rem;
+}
+
+/* Active links menu */
+.active {
+    background-color: var(--first-color);
+}
+
+/* COLLAPSE */
+.collapse {
+    grid-template-columns: 20px max-content 1fr;
+}
+
+.collapse__link {
+    justify-self: flex-end;
+    transition: .5;
+}
+
+.collapse__menu {
+    display: none;
+    padding: .75rem 2.25rem;
+}
+
+.collapse__sublink {
+    color: var(--sub-color);
+    font-size: var(--small-font-size);
+}
+
+.collapse__sublink:hover {
+    color: var(--white-color);
+}
+
+/* Show collapse */
+.showCollapse {
+    display: block;
+}
+
+/* Rotate icon */
+.rotate {
+    transform: rotate(180deg);
+    transition: .5s;
+}
+
+/* -----------------myPageSidebar End-----------------*/
+
+/****** div : dropdown END ******/

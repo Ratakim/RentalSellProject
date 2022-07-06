@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="mapper.user">
+ 
+ 	<!-- 아이디가 있는지 검사 -->
+	<select id="selectCountRow" parameterType="String" resultType="int">
+	<![CDATA[
+		select count(*) 
+		from user_info
+		where id=#{id}
+	]]>
+	</select>
+	
+ 	<!-- 회원가입 -->
+	<insert id="insertUserInfo" parameterType="userInfoVO">
+	<![CDATA[
+     INSERT INTO user_info	
+                (id, pwd, name, email, gender, emailAccess, address, post, road, jibun,detail, join_date, last_join)
+        VALUES(#{id}, #{pwd}, #{name}, #{email},#{gender}, #{emailAccess},#{sample4_extraAddress}, #{sample4_postcode},	#{sample4_roadAddress}, #{sample4_jibunAddress}, #{sample4_detailAddress}, sysdate, sysdate)
+	]]>
+	
+	</insert>
+	
+	<!-- id로 회원 목록 불러오기 -->
+	<select id="selectUserById" parameterType="String" resultType="userInfoVO">
+	<![CDATA[
+	SELECT 	*
+	FROM 	user_info
+	WHERE 	id = #{id}
+	]]>
+	</select>
+	
+	<!-- 회원 로그인 시 마지막 접속일 업데이트 -->
+	<update id="updateUserLastJoin" parameterType="String">
+	<![CDATA[
+	UPDATE  user_info
+	SET		last_join 	= SYSDATE
+	WHERE	id 			= #{id}
+	]]>
+	</update>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUserInfo" parameterType="userInfoVO">
+	<![CDATA[
+	UPDATE 	user_info
+	SET 	pwd 	= #{pwd},
+			email 	= #{email}
+	WHERE 	id 		= #{id}
+	]]>
+	</update>
+	
+	<!-- 회원 정보 삭제 -->
+	<delete id="deleteUserInfo" parameterType="String">
+	<![CDATA[
+	DELETE 	
+	FROM 	user_info
+	WHERE 	id = #{id}
+	]]>
+	</delete>
+	
+	<!-- 계좌 등록 -->
+	<insert id="insertUserAccount" parameterType="UserCertifyVO">
+	<![CDATA[
+	INSERT 
+	INTO 	Account	(no, id, bank, account)
+			VALUES  (account_SEQ.NEXTVAL, #{id}, #{bank}, #{account})
+	]]>
+	</insert>
+	
+	<!-- 카드 등록 -->
+	<insert id="insertUserCard" parameterType="UserCertifyVO">
+	<![CDATA[
+	INSERT 
+	INTO 	card	(no, id, bank, card_No, cvc)
+			VALUES  (card_SEQ.NEXTVAL, #{id}, #{bank}, #{card_No}, #{cvc})
+	]]>
+	</insert>
+	
+	<!-- 계좌 불러오기 -->
+	<select id="UserAccount" resultType="UserCertifyVO">
+	<![CDATA[
+	select * 
+	from Account	
+	]]>
+	</select>
+	
+	<!-- 카드 불러오기 -->
+	<select id="UserCard" resultType="UserCertifyVO">
+	<![CDATA[
+	select * 
+	from Card	
+	]]>
+	</select>
+	
+	<!-- 계좌가 있는지 검사 -->
+	<select id="countAccount" resultType="int">
+	<![CDATA[
+	select count(*) 
+	from Account
+	WHERE id = #{id}
+	]]>
+	</select>
+	
+	<!-- 카드가 있는지 검사 -->
+	<select id="countCard" resultType="int">
+	<![CDATA[
+	select count(*) 
+	from Card
+	WHERE id = #{id}
+	]]>
+	</select>
+	
+	<!-- 이름과 이메일로 회원 정보 불러오기 -->
+	<select id="findUserInfo" resultType="userInfoVO">
+	SELECT 	*
+	FROM 	user_info
+	<choose>
+		<!-- 아이디가 null이면 id 찾기 -->
+		<when test="id == null">
+			WHERE email = #{email}
+			AND   name	= #{name}
+		</when>
+		<!-- 아이디가 있으면 비밀번호 찾기 -->
+		<otherwise>
+			WHERE id 	= #{id}
+			AND   email = #{email}
+			AND   name	= #{name} 
+		</otherwise>
+	</choose>
+	</select>
+	
+	<update id="updateUserPwd" parameterType="hashMap">
+	<![CDATA[
+	UPDATE 	user_info
+	SET 	pwd = #{password}
+	WHERE 	id = #{id} 
+	]]>
+	</update>
+ 	
+ </mapper>

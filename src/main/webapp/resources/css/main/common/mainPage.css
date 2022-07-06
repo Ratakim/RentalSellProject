@@ -1,0 +1,254 @@
+@charset "UTF-8";
+
+   main {
+	   height: auto;
+	   min-height: 1200px;
+	   display: 		flex;
+	   flex-direction: 	column;
+   }
+ 
+  
+ @font-face {
+  src: url("https://www.axis-praxis.org/fonts/webfonts/MetaVariableDemo-Set.woff2")
+    format("woff2");
+  font-family: "Meta";
+  font-style: normal;
+  font-weight: normal;
+}
+
+.billy {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+ 
+
+}
+
+h3 {
+  transition: all 0.5s;
+  -webkit-text-stroke: 4px #d6f4f4;
+  font-variation-settings: "wght" 900, "ital" 1;
+  font-size: 10rem;
+  text-align: center;
+  color: transparent;
+  font-family: "Meta", sans-serif;
+  text-shadow: 10px 10px 0px #000000,
+    15px 15px 0px #808080,
+    20px 20px 0px #c0c0c0,
+    25px 25px 0px #fff5ee,
+    45px 45px 10px #fffafa;
+  cursor: pointer;
+}
+
+h3:hover {
+  font-variation-settings: "wght" 100, "ital" 0;
+  text-shadow: none;
+}
+
+ /* 메인 로고 끝 */
+ 
+
+
+/* Start Landing Page */
+
+
+.landing-page {
+	text-align: center;
+	width: 300px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom:50px;
+	}
+	
+.landing-page .info h1 {
+    font-size: 40px;
+    margin: 0 0 20px;  
+    color: #5d5d5d;
+}
+
+.landing-page .info p {
+    margin: 0;    
+    font-size: 15px;
+    color: #5d5d5d;
+}
+
+.landing-page .info button {
+    border: 0;
+    border-radius: 20px;
+    padding: 12px 30px;
+    margin-top: 30px;
+    cursor: pointer;
+    color: #FFF;
+    background-color: #000000;
+}
+
+.clearfix {
+  clear: both;
+}
+
+/* End Landing Page */
+
+* {margin: 0; padding: 0;}
+
+.slider{
+	align-items: center;
+	width: 640px; /*Same as width of the large image*/
+	position: relative;
+	/*Instead of height we will use padding*/
+	padding-top: 320px; /*That helps bring the labels down*/
+	
+	margin: 100px auto;
+	
+	/*Lets add a shadow*/
+	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
+	top-margin: 40px;
+}
+
+
+/*Last thing remaining is to add transitions*/
+.slider>img{
+	position: absolute;
+	left: 0; top: 0;
+	transition: all 0.5s;
+}
+
+.slider input[name='slide_switch'] {
+	display: none;
+}
+
+.slider label {
+	/*Lets add some spacing for the thumbnails*/
+	margin: 18px 0 0 18px;
+	border: 3px solid #999;
+	
+	float: left;
+	cursor: pointer;
+	transition: all 0.5s;
+	
+	/*Default style = low opacity*/
+	opacity: 0.6;
+}
+
+.slider label img{
+	display: block;
+}
+
+/*Time to add the click effects*/
+.slider input[name='slide_switch']:checked+label {
+	border-color: #666;
+	opacity: 1;
+}
+/*Clicking any thumbnail now should change its opacity(style)*/
+/*Time to work on the main images*/
+.slider input[name='slide_switch'] ~ img {
+	opacity: 0;
+	transform: scale(1.1);
+}
+/*That hides all main images at a 110% size
+On click the images will be displayed at normal size to complete the effect
+*/
+.slider input[name='slide_switch']:checked+label+img {
+	opacity: 1;
+	transform: scale(1);
+}
+.main-infoFirst{
+	height:			630px;
+}
+.main-infoSecond{
+	height:			600px;
+	background-color:	#d0d0d0;
+}
+
+/*Clicking on any thumbnail now should activate the image related to it*/
+
+/*  */
+
+/* .sqare {
+    width: 						100px;
+    height: 					100px;
+    background-color: 		red;
+    transition-property: 		width, background-color;  트랜지션의 대상이 되는 프로퍼티를 지정 (기본값 all)
+    transition-duration: 		0.5s, 0.5s; 				변화가 일어나는 기간. 초단위. 프로퍼티와 각각 대응 (기본값 0s)
+    transition-timing-function: ease;  트랜지션 변화율 함수 지정 (기본값 ease)
+    transition-delay: 			0.2s; 			트리거 이벤트 발생 후 몇 초 후에 트랜지션이 시작될 것인지 지정 (기본값 0s)
+    transition : 				(shorthand)
+}
+
+.sqare:hover {
+    width: 300px;
+    background-color: blue;
+} */
+
+.action-main {
+	position: 		relative;
+	top:			80px;
+	margin:			 0 0 80px 0;
+}
+
+.action-part-container {
+	display:			flex;
+	flex-direction: 	column;	
+}
+
+.action-part {
+	opacity:			0;
+	transform:			scale(0);
+	margin: 			50px 0;
+	display: 			flex;
+	flex-direction: 	row;
+	justify-content: 	space-evenly;
+	align-items: 		center;
+}
+
+.action-img img {
+	width:				200px;
+	height:				350px;
+	margin:				0 50px 0 0;	
+	animation: 			up-down 1.4s infinite ease-in-out alternate;
+}
+
+.action-text {
+	font-size: 			24px;
+}
+
+.action-text > p > b {
+	font-size: 			40px;
+}
+
+@keyframes fade {
+	from {
+		transform:		translateY(100px);
+		opacity: 		0;
+	}
+	to {
+		transform:		translateY(0px);
+		opacity: 		1;
+	}
+}
+
+@keyframes fadeout {
+	from {
+ 		transform:		translateY(0px);
+		opacity: 		1;
+ 	}
+	 to {
+ 		transform:		translateY(100px);
+		opacity: 		0;
+ 	}
+}
+
+@keyframes up-down {
+  from{
+    	transform: translatey(0px);
+  }
+  to{
+    	transform: translatey(-20px);
+  }
+}
+
+
+

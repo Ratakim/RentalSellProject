@@ -1,0 +1,139 @@
+@charset "UTF-8";
+/* common */
+body {
+	min-width: 			1200px;
+	min-height: 		800px;
+	
+}
+
+
+/*------------------------------------------------*/
+/* step bar css */
+/*------------------------------------------------*/
+.step-header {
+	display:			flex;
+	flex-direction:		column;
+	height: 			300px;
+	justify-content:	center;
+	align-items: 		center;
+}
+
+#mainLogo {
+	height: 			100px;
+	width:				300px;
+}
+
+/* step bar css - END */
+
+
+
+/*------------------------------------------------*/
+/* signUpForm css */
+/*------------------------------------------------*/
+/* main {
+	
+} */
+
+
+.step {
+	width:				500px;
+	background-color:	white;
+	border:				1px solid #000;
+	border-radius: 		.5rem;
+	padding: 			.5rem;
+	margin:				0 auto;
+	animation:			fade  125ms 125ms ease-in-out forwards;
+	/* display: 			none; */
+	/* transform:			translateX(200%);	
+	opacity: 			0;
+	transition:			500ms ease-in-out;
+	position: 			absolute; */
+	
+}
+
+.form-group {
+	display: 			flex;
+	flex-direction:		column;
+	margin-bottom: 		.5rem;
+	gap:				.25rem;
+	
+}
+
+form-group:last-child {
+	margin:				0;
+}
+
+.form-group > label {
+	font-weight: 		bold;
+	font-size: 			.8em;
+	color:				#333;
+}
+
+.form-group > input {
+	border:	 			1px solid #333;
+	border-radius: 		.25em;
+	font-size:			1rem;
+	padding:			.25em;
+}
+
+.step-title {
+	margin: 			0;
+	margin-bottom:		1rem;
+	text-align: 		center;
+}
+
+.step.active {
+	/* display: 			block; */
+	/* transform:			translateX(0);
+	opacity: 			1;
+	transition-delay:	500ms; */
+	animation:			slide 250ms 125ms ease-in-out both;
+}
+
+.step.hide {
+}
+
+.muti-step-form {
+	overflow:		 	hidden;
+	position: 	 		relative;
+}
+
+.hide {
+	display: 			none;
+}
+
+/* 키프레임은 애니메이션 과정의 중간 절차를 css로 제어할 수 있게 해준다. */
+@keyframes slide {
+	0% {
+		transform:		translateX(200%);
+		opacity: 		0;
+	}
+	
+	100% {
+		transform:		translateX(0);
+		opacity:		1;
+	}
+
+}
+
+@keyframes fade {
+	0% {
+		/* transform의 scale은 크기를 줄이는 것 */
+		transform:		scale(1);
+		opacity: 		1;
+	}
+	
+	50% {
+		transform:		scale(.75);
+		opacity: 		0;
+		  
+	}
+	
+	100% {
+		opacity: 		0;
+		transform:		scale(0);
+		
+	}
+
+}
+/* signUpForm css - END */

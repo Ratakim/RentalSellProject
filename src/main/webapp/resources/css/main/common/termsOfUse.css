@@ -1,0 +1,37 @@
+.page-content .wrapper {
+    margin: 1.6rem;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.billy_img{
+	
+	
+}
+
+
+user agent stylesheet
+div {
+    display: block;
+}
+body {
+    position: relative;
+    color: #212529;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 400;
+    min-height: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+html {
+    font-size: 62.5%;
+    height: 100%;
+}
+::selection {
+    color: #212529;
+    background: #FFB98B;
+}

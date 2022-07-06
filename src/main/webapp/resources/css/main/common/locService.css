@@ -1,0 +1,17 @@
+html {
+    font-size: 62.5%;
+    height: 100%;
+}
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+user agent stylesheet
+html {
+    display: block;
+}
+::selection {
+    color: #212529;
+    background: #FFB98B;
+}

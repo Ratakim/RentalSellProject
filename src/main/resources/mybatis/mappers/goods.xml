@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="mapper.goods">
+ 
+	<!-- 객체내의 멤버객체를 넣을 떼 사용한다. -->
+	<!-- 출처 : http://noveloper.github.io/blog/spring/2015/05/31/mybatis-assocation-collection.html -->
+	<!-- 
+	<resultMap type="goodsByIdVO" id="goodsBoard">
+		<id 	column="" property=""/>
+		<result column="" property=""/>
+		<association column="" property="">
+			<id 	column="" property=""/>
+			<result column="" property=""/>
+		</association>
+	</resultMap>
+	-->
+	
+<!--*************** 카테고리 불러오기 ***************-->
+
+	<!-- 대분류 카테고리 -->
+	<select id="selectRgCtgNameList" resultType="registCtgVO">
+	<![CDATA[
+	SELECT		category_NM , category_ID
+	FROM		goods_category
+	WHERE   	category_LEV = 1
+	]]>
+ 	</select>
+	
+	<!-- 중분류 카테고리 가져오기 ajax -->
+	<select id="selectCategoryM" parameterType="String" resultType="registCtgVO">
+	<![CDATA[
+	SELECT 	category_NM, category_ID
+	FROM 	goods_category
+	WHERE 	category_detail_parent_LEV = (	SELECT 	category_ID 
+											FROM 	goods_category
+											WHERE  	category_NM = #{category_NM})
+	AND		category_LEV = 2
+	]]>
+ 	</select>
+ 	
+ 	<!-- 소분류 카테고리 가져오기 ajax -->
+	<select id="selectCategoryS" parameterType="String" resultType="registCtgVO">
+	<![CDATA[
+	SELECT 	category_NM 
+	FROM 	goods_category
+	WHERE 	category_detail_parent_LEV = (	SELECT 	category_ID 
+											FROM 	goods_category
+											WHERE  	category_NM = #{category_NM})
+	AND		category_LEV = 3
+	]]>
+	</select>
+	
+<!--*************** 카테고리 불러오기 ***************-->
+
+<!--*************** 상품 불러오기 ***************-->
+
+	<!-- 상품 게시판의 goods_code에 해당하는 카테고리 목록 불러오기 -->
+	<select id="selectGoodsCategoryNM" parameterType="int" resultType="registCtgVO">
+	<![CDATA[
+	SELECT 	* 
+	FROM 	goods_category
+	WHERE 	category_id = 	(	SELECT category_id 
+								FROM 	goods_board
+                       	   		WHERE 	goods_code = #{goods_code})
+	]]>
+	</select>
+	
+	<!-- 상품 상세페이지 조회시 조회수 증가 MAPPER-->
+	<update id="goodsViewCount" parameterType="int" >
+	<![CDATA[
+	UPDATE 	goods_board
+	SET 	goods_hit 	= goods_hit + 1
+	WHERE 	goods_code 	= #{goods_code}
+	]]>
+	</update>
+	
+	<!-- 상품 상세보기시 컨텐츠 리스트 MAPPER-->
+	<select id="selectAllGoods" resultType="goodsByIdVO"  parameterType="hashMap">
+	<![CDATA[
+	SELECT 	goods_code , category_ID ,user_ID , goods_title, deal_region, goods_desc,
+	        to_char(goods_price,'999,999,999,999')as goods_price_comma, 
+	        create_date ,goods_hit, goods_price
+	FROM 	(SELECT 	rownum rnum, goods_code , category_ID ,user_ID , goods_title,deal_region, goods_desc,
+	                    to_char(goods_price,'999,999,999,999')as goods_price_comma, 
+	                    create_date ,goods_hit, goods_price 
+	         FROM   (SELECT goods_code , category_ID ,user_ID , goods_title, deal_region, goods_desc,
+	                        to_char(goods_price,'999,999,999,999')as goods_price_comma, 
+	                        create_date ,goods_hit, goods_price
+	                FROM goods_board 
+	              	WHERE  category_id = (select category_id from goods_category where category_NM like '%'||#{searchValue}||'%' )
+                    or goods_title like '%'||#{searchValue}||'%'
+                    or goods_desc like '%'||#{searchValue}||'%'
+                    or deal_region like '%'||#{searchValue}||'%'
+                    order by goods_code desc
+	                )
+	         )
+	WHERE	rnum between ${start} and ${end}
+	]]>
+	</select>
+	
+	<!-- 검색한 board테이블에 모든 컬럼갯수 가져오기 -->
+	<select id="getTotalRow" resultType="int" >
+	<![CDATA[
+	SELECT 	count(*)
+	FROM 	goods_board
+	WHERE  category_id = (select category_id from goods_category where category_NM like '%'||#{searchValue}||'%' )
+                    or goods_title like '%'||#{searchValue}||'%'
+                    or goods_desc like '%'||#{searchValue}||'%'
+                    or deal_region like '%'||#{searchValue}||'%'
+	
+	]]> 
+	</select>
+	
+	<!-- 검색한 board테이블에 모든 컬럼갯수 가져오기 -->
+	<select id="getAllTotalRow" resultType="int" >
+	<![CDATA[
+	SELECT 	count(*)
+	FROM 	goods_board
+	]]> 
+	</select>
+ 
+ 	<!-- 검색 조건 처리를 위한 태그 :sql -->
+ 	<sql id="search">
+ 		<if test = "searchValue != null and word != ''.toString">
+ 		<![CDATA[
+ 			 WHERE  category_id = (select category_id from goods_category where category_NM like '%'||#{searchValue}||'%' )
+                    or goods_title like '%'||#{searchValue}||'%'
+                    or goods_desc like '%'||#{searchValue}||'%'
+                    or deal_region like '%'||#{searchValue}||'%'
+        ]]> 
+ 		</if>
+ 	</sql>
+ 	
+<!--*************** 상품 게시판 등록하기 ***************-->
+ 
+ 	<!-- 상품 게시판 등록하기 -->
+	<insert id="insertGoodsBoard" parameterType="goodsByIdVO">
+	<![CDATA[
+	INSERT INTO 
+	goods_board	(goods_code, category_ID, user_ID, 
+				goods_title, deal_region, goods_desc, goods_price, goods_hit)
+	VAlUES 		(SEQ_GOODS_ID.nextval, #{category_ID}, #{user_ID}, 
+				#{goods_title}, #{deal_region}, #{goods_desc}, #{goods_price}, 0)
+	]]>
+	</insert>
+	
+	<!-- 아이디가 최근 등록한 게시판 코드 -->
+	<select id="selectRecentGoodsCode" parameterType="String" resultType="int">
+	<![CDATA[
+	SELECT  MAX(goods_code) 
+	FROM    goods_board
+	WHERE   user_id = #{user_ID}
+	]]>
+	</select>
+	
+	<!-- 상품 게시판 이미지 파일 등록하기 -->
+	<insert id="insertGoodsImgFile" parameterType="goodsImgFileVO">
+	<![CDATA[
+	INSERT INTO 
+	goods_imagefile	(file_num, goods_code, origin_file_name, 
+					stored_file_name, stored_thumbNail, file_size)
+	VAlUES
+	(SEQ_GOODS_IMG.nextval, #{goods_code}, #{origin_file_name}, 
+	#{stored_file_name}, #{stored_thumbNail}, #{file_size})
+	]]>
+	</insert>
+	
+	
+	
+<!--*************** 상품 게시판 등록하기 ***************-->
+	
+<!--*************** 해당 상품 게시판 VO, 이미지 리스트 가져오기 ***************-->
+
+	<!--
+	 이건 리스트를 불러올때 사용
+	 javaType	: 	배열의 타입 List, map, []
+	 column		: 	두테이블을 연결하는 외래키를 넣음
+	 ofType		:	리스트 안의 객체 타입
+	 property	:	리스트 변수 이름
+	 select		:	부를 다른 select문
+	-->
+	
+	<!-- 상품게시판 이미지 파일 리스트 resultMap -->
+	<resultMap type="goodsByIdVO" id="goodsResultMap">
+		<id column="goods_code" property="goods_code"/>
+		<collection 
+		javaType="java.util.ArrayList" ofType="goodsImgFileVO" property="goodsFileList" 
+		select="selectGoodsImgFile" column="goods_code"/>
+	</resultMap>
+	
+	<!-- 상품 상세보기시 컨텐츠 리스트 MAPPER-->
+	<select id="selectGoodsBoard"  resultMap="goodsResultMap">
+	<![CDATA[
+	SELECT 	goods_code, category_ID, user_ID, goods_title, deal_region, goods_desc,
+			to_char(goods_price,'999,999,999,999')as goods_price_comma, 
+			create_date ,goods_hit, goods_price
+	FROM 	goods_board
+	WHERE 	goods_code 	= #{goods_code}
+	]]>
+	</select>
+	
+	<!-- 해당 상품 게시판 이미지 파일 리스트 찾아오기 -->
+	<select id="selectGoodsImgFile" resultType="goodsImgFileVO">
+	<![CDATA[
+	SELECT 	*
+	FROM 	goods_imagefile
+	WHERE 	goods_code 	= #{goods_code}
+	]]>
+	</select>
+	
+<!--*************** 해당 상품 게시판 VO, 이미지 리스트 가져오기 ***************-->
+
+<!--*************** 썸네일을 가진 GoodsVO를 Goods리스트를 저장 ***************-->
+
+ 	<!-- 상품 게시판 썸네일 resultMap -->
+ 	<!-- <resultMap type="goodsByIdVO" id="goodsResultMapList">
+		<id column="goods_code" property="goods_code"/>
+		<collection 
+		javaType="java.util.ArrayList" 	ofType="goodsImgFileVO" property="goodsFileList" 
+		select="selectGoodsThumbNail" 	column="goods_code"/>
+	</resultMap> -->
+	
+	<!-- 상품 게시판 resultMap -->
+	<!-- 	
+			goods_code
+			category_ID
+			user_ID
+			goods_title
+			deal_region
+			goods_desc
+			goods_price
+			goods_price_comma
+			create_date
+			goods_hit 		
+	-->
+	<resultMap id="goodsResultMapSearch" type="goodsByIdVO" >
+		<id 	column="goods_code" 		property="goods_code"/>
+		<result column="category_ID" 		property="category_ID"/>
+		<result column="user_ID" 			property="user_ID"/>
+		<result column="goods_title" 		property="goods_title"/>
+		<result column="deal_region" 		property="deal_region"/>
+		<result column="goods_desc" 		property="goods_desc"/>
+		<result column="goods_price" 		property="goods_price"/>
+		<result column="goods_price_comma" 	property="goods_price_comma"/>
+		<result column="create_date" 		property="create_date"/>
+		<result column="goods_hit" 			property="goods_hit"/>
+		<collection 
+		property="goodsFileList" 
+		resultMap="goodsImgFile"/>
+	</resultMap>
+	<!-- 	
+			file_num  
+			goods_code
+			origin_file_name
+			stored_file_name
+			stored_thumbNail
+			file_size
+			create_date
+			delete_check 		
+	-->
+	<resultMap id="goodsImgFile" type="goodsImgFileVO" >
+		<id 	column="file_num" 			property="file_num"/>
+		<result column="child_goods_code" 	property="goods_code"/>
+		<result column="origin_file_name" 	property="origin_file_name"/>
+		<result column="stored_file_name" 	property="stored_file_name"/>
+		<result column="stored_thumbNail"	property="stored_thumbNail"/>
+		<result column="file_size" 			property="file_size"/>
+		<result column="file_create_date" 		property="create_date"/>
+		<result column="delete_check" 		property="delete_check"/>
+	</resultMap>
+	
+	<select id="selectGoodsBoardJoinFilesSearch"
+			resultMap="goodsResultMapSearch">
+	<![CDATA[
+	SELECT 
+	        goods_code,
+	        category_ID,
+	        user_ID,
+	        goods_title,
+	        deal_region,
+	        goods_desc,
+	        goods_price,
+	        goods_price_comma,
+	        create_date,
+	        goods_hit,
+	        file_num,
+	        child_goods_code,
+	        origin_file_name,
+	        stored_file_name,
+	        stored_thumbNail,
+	        file_size,
+	        file_create_date,
+	        delete_check
+	FROM (
+	        SELECT 
+	                rownum rnum,
+	                goods_code,
+	                category_ID,
+	                user_ID,
+	                goods_title,
+	                deal_region,
+	                goods_desc,
+	                goods_price,
+	                goods_price_comma,
+	                create_date,
+	                goods_hit,
+	                file_num,
+	                child_goods_code,
+	                origin_file_name,
+	                stored_file_name,
+	                stored_thumbNail,
+	                file_size,
+	                file_create_date,
+	                delete_check
+	        FROM (
+	                SELECT   
+				                gb.goods_code           goods_code,
+				                gb.category_ID          category_ID,
+				                gb.user_ID              user_ID,
+				                gb.goods_title          goods_title,
+				                gb.deal_region          deal_region,
+				                gb.goods_desc           goods_desc,
+				                gb.goods_price          goods_price,
+				                to_char(gb.goods_price,'999,999,999,999')    goods_price_comma,
+				                gb.create_date          create_date,
+				                gb.goods_hit            goods_hit,
+				                gf.file_num             file_num,
+				                gf.goods_code           child_goods_code,
+				                gf.origin_file_name     origin_file_name,
+				                gf.stored_file_name     stored_file_name,
+				                gf.stored_thumbNail     stored_thumbNail,
+				                gf.file_size            file_size,
+				                gf.create_date          file_create_date,
+				                gf.delete_check         delete_check
+	                FROM 		goods_board gb
+	                LEFT JOIN 	goods_imagefile gf
+	                ON gb.goods_code = gf.goods_code AND stored_thumbNail = 1
+	                WHERE  	category_id = 	(
+		              							SELECT 	category_id 
+		              							FROM 	goods_category 
+		              							WHERE 	category_NM 
+		              							LIKE 	'%' || #{searchValue} || '%' 
+		              						)
+                   	or goods_title like '%'||#{searchValue}||'%'
+                   	or goods_desc like '%'||#{searchValue}||'%'
+                   	or deal_region like '%'||#{searchValue}||'%'
+                   	ORDER BY create_date DESC
+	               )       
+	       )
+		
+	WHERE rnum BETWEEN #{start} AND #{end}
+	]]>
+	</select>
+	
+	<!-- 상품 상세보기시 컨텐츠 리스트 MAPPER
+	<select id="selectGoodsBoardList"  resultMap="goodsResultMap">
+	<![CDATA[
+	SELECT 	goods_code, category_ID, user_ID, goods_title, deal_region, goods_desc,
+			to_char(goods_price,'999,999,999,999')as goods_price_comma, 
+			create_date ,goods_hit, goods_price
+	FROM 	(
+			SELECT 			rownum, goods_code , category_ID ,user_ID , goods_title,deal_region, goods_desc,
+		                    to_char(goods_price,'999,999,999,999') as goods_price_comma, 
+		                    create_date ,goods_hit, goods_price 
+		        FROM   	(
+		        		SELECT 	goods_code , category_ID ,user_ID , goods_title, deal_region, goods_desc,
+		                        to_char(goods_price,'999,999,999,999') as goods_price_comma, 
+		                        create_date ,goods_hit, goods_price
+		                FROM 	goods_board 
+		              	WHERE  	category_id = 	(
+		              							SELECT 	category_id 
+		              							FROM 	goods_category 
+		              							WHERE 	category_NM 
+		              							LIKE 	'%' || #{searchValue} || '%' 
+		              							)
+	                    OR goods_title 	like '%' || #{searchValue} || '%'
+	                    OR goods_desc 	like '%' || #{searchValue} || '%'
+	                    OR deal_region 	like '%' || #{searchValue} || '%'
+	                    ORDER BY create_date DESC
+		                )
+		       	WHERE	rownum BETWEEN #{start} AND #{end}
+		       	)
+	WHERE 	goods_code 	= #{goods_code}
+	]]>
+	</select>
+	
+	<select id="selectGoodsImgFileThumb" resultType="goodsImgFileVO">
+	<![CDATA[
+	SELECT 	*
+	FROM 	goods_imagefile
+	WHERE 	goods_code 	= #{goods_code}
+	AND 	stored_thumbNail = 1
+	]]>
+	</select> -->
+ 	
+ </mapper>

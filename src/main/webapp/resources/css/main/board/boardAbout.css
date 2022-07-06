@@ -1,0 +1,53 @@
+h1 {
+	text-align: center;
+}
+
+a {
+	color: black;
+}
+
+.selectbutton {
+	text-align: center;
+}
+
+
+.select {
+  
+  width: 95px;
+  height: 35px;
+  background-size: 20px;
+  padding: 5px 30px 5px 10px;
+  border-radius: 4px;
+  outline: 0 none;
+}
+.select option {
+  background: gray;
+  color: #fff;
+  padding: 3px 0;
+}
+
+.search {
+	text-align: center;
+}
+
+.search> btn btn-outline-dark {
+	height: 30px;
+}
+
+#searchbar {
+	width: 300px;
+}
+
+.content {
+	text-align: center;
+}
+
+.pagination {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+}
+
+.page-link {
+	color: black;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="mapper.common">
+ 
+ 	<!-- 아이디가 없을 때 -->
+	<select id="selectCountRow" parameterType="String" resultType="int">
+	<![CDATA[
+	SELECT 		COUNT(category_NM) AS count
+	FROM 		goods_category
+	WHERE 		category_NM LIKE '%' || #{name} || '%'
+	]]>
+	</select>
+	
+ 	<!-- 검색어 -->
+	<select id="selectSearchList" parameterType="String" resultType="registCtgVO">
+	<![CDATA[
+	SELECT 		category_NM
+	FROM 		goods_category
+	WHERE 		category_NM LIKE '%' || #{name} || '%'
+	]]>
+	</select>
+
+	
+	
+ </mapper>

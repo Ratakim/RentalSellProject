@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- 경로 : views/layout -->
+	
+	<!-- side left -->
+	<definition name="Layout1" template="/WEB-INF/views/layout/layout.jsp">
+		<put-attribute name="title" 	value=""/>
+		<put-attribute name="header" 	value="/WEB-INF/views/header/header.jsp"/>
+		<put-attribute name="side" 		value="/WEB-INF/views/side/myPageSide.jsp"/>
+		<put-attribute name="main" 		value=""/>
+		<put-attribute name="footer" 	value="/WEB-INF/views/footer/footer.jsp"/>
+	</definition>
+	
+	<!-- none side -->
+	<definition name="Layout2" template="/WEB-INF/views/layout/layout2.jsp">
+		<put-attribute name="title" 	value=""/>
+		<put-attribute name="header" 	value="/WEB-INF/views/header/header.jsp"/>
+		<put-attribute name="main" 		value=""/>
+		<put-attribute name="footer" 	value="/WEB-INF/views/footer/footer.jsp"/>
+	</definition>
+	<!-- layout - END -->
+	
+	<!-- none header, side -->
+	<definition name="Layout3" template="/WEB-INF/views/layout/layoutNoHeader.jsp">
+		<put-attribute name="title" 	value=""/>
+		<put-attribute name="main"		value=""/>
+		<put-attribute name="footer"	value="/WEB-INF/views/footer/footer.jsp"/>
+	</definition>
+	<!-- extends -->
+	
+	<!-- 경로 : views/layout -->
+	
+<!-- *************** 상품 관련 페이지 *************** -->	
+
+	<!-- 경로 : views/main/goods -->
+	
+	<definition name="/goods/registerForm" 	extends="Layout2">
+		<put-attribute name="title" 	value=" 물건등록 페이지"/>
+		<put-attribute name="main" 		value="/WEB-INF/views/main/goods/registerPage.jsp"/>
+	</definition>
+	
+	<definition name="/goods/goodsList" 	extends="Layout2">
+		<put-attribute name="title" 	value=" 상품 리스트"/>
+		<put-attribute name="main" 		value="/WEB-INF/views/main/goods/goodsList.jsp"/>
+	</definition>
+	
+	<definition name="/goods/goodsById" 	extends="Layout2">
+		<put-attribute name="title" 	value=" 물건등록 상세 페이지"/>
+		<put-attribute name="main" 		value="/WEB-INF/views/main/goods/goodsById.jsp"/>
+	</definition>
+	
+	<definition name="/goods/goodsBoard" 	extends="Layout2">
+		<put-attribute name="title" 	value="진짜 모든 상품 리스트"/>
+		<put-attribute name="main" 		value="/WEB-INF/views/main/goods/goodsBoard.jsp"/>
+	</definition>
+	<!-- 경로 : views/main/goods - END -->
+	
+<!-- *************** 상품 관련 페이지 END *************** -->	
+
+</tiles-definitions>

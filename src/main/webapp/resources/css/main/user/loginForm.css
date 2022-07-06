@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+#login-body-1 {
+	display: 	flex;
+	flex-direction:  column;
+	/*
+	flex-grow:		2;		영역 안쪽에 여백이 생겼을때 배치 지정
+	flex-shrink: 	2;		영역 바깥으로 밀려났을때 안쪽으로 배치 지정
+	flex-basis: 	auto; 
+	flex:			2 2 auto; 위의 요소들을 flex 하나로 쓰기가능
+	*/
+	align-items: 		center;
+	min-height:			700px; 
+	margin:				100px 0 0 0;
+	justify-content: 	space-around;
+}
+
+.login-title {
+	text-align: 		center;
+}
+
+#login-body-1 div input, #login-body-1 div label {
+	border:				1px solid #333;
+	border-radius: 		.5rem;
+	padding:			.5rem;
+}
+
+
+.login-main {
+	width:				500px;
+}
+
+.login-main label {
+	width: 				150px;
+}
+
+.login-main input {
+	width:				500px;
+}
+
+.form-group {
+	display:  			flex;
+	flex-direction: 	column;
+	gap:				.5rem;
+}
+
+.warning {
+	color:				red;
+}
+
+.login-btns {
+	display: 			flex;
+	flex-direction: 	column;
+}
+
+.login-btns button {
+	background: 		rgb(253, 136, 139);
+	border-color: 		rgb(247, 159, 184);
+	border-radius: 		10px;
+}
+
+/* .main-logo {
+	width: 				300px;
+	height: 			100px;
+} */
+
